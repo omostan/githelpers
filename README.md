@@ -2,7 +2,7 @@
 Git helpers for clients. Code is not intended as standalone files, but
 rather as snippets for use in other files.
 
-This is a folk from the improved code from here. All credits to the original creator and contributors.
+This is a folk from the improved code from [here](https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh). All credits to the original creator and contributors.
 
 All code licensed MIT unless stated otherwise.
 
