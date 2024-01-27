@@ -55,11 +55,15 @@ git_color() {
     elif [[ -n $staged ]]; then
         echo -e '\033[1;32m'  # bold green
     elif [[ -n $dirty ]]; then
-        echo -e '\033[1;31m'  # bold red
+        echo -e '\033[3;5;31m'  # bold italic blinking red
     elif [[ -n $needs_push ]]; then
         echo -e '\033[1;34m' # bold blue
     else
-        echo -e '\033[1;37m'  # bold white
+	if [[ $(git_branch) =~ "master" ]]; then
+	    echo -e '\033[1;31m'  # bold red
+	else
+	    echo -e '\033[1;37m'   # bold white
+	fi
     fi
 }
 
@@ -72,11 +76,12 @@ git_prompt() {
         local state=$(git_status)
         local color=$(git_color $state)
         # Now output the actual code to insert the branch and status
-        echo -e "\x01$color\x02[$branch$state]\x01\033[00m\x02"  # last bit resets color
+	# Replace the brackets in "($branch$state)" with square brackets "[$branch$state]" if that is more prefered
+        echo -e "\x01$color\x02($branch$state)\x01\033[00m\x02"  # last bit resets color
     fi
 }
 
 # Sample prompt declaration. Tweak as you see fit, or just stick
 # "$(git_prompt)" into your favorite prompt.
-PS1='\u@\h:\w$(git_prompt)\[\033[00m\]\$ '
-
+# PS1='\u@\h:\w$(git_prompt)\[\033[00m\]\$ '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[32m\]:\[\033[01;34m\]\w$(git_prompt)\[\033[01;32m\]\$ \[\033[00m\] '
